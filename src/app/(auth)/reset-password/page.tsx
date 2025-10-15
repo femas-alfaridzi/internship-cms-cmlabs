@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
@@ -13,7 +13,44 @@ interface ResetPasswordFormData {
   confirmPassword: string;
 }
 
-export default function ResetPasswordPage() {
+// Komponen untuk loading fallback
+function ResetPasswordLoading() {
+  return (
+    <div className="min-h-screen flex">
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 bg-white dark:bg-gray-900">
+        <div className="w-full max-w-md">
+          <div className="text-center">
+            <div className="animate-pulse">
+              <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-8"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="hidden lg:flex lg:w-1/2 bg-primary items-center justify-center p-12 fixed right-0 top-0 bottom-0">
+        <div className="text-center text-white max-w-md">
+          <div className="mb-8 flex justify-center">
+            <div className="bg-white rounded-2xl p-2 shadow-2xl">
+              <Image
+                src="/images/logo.png"
+                alt="CMS Logo"
+                width={186}
+                height={186}
+                className="w-32 h-32"
+              />
+            </div>
+          </div>
+          <p className="text-[16px] font-bold leading-relaxed">
+            Enter your new password to complete the reset process.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Komponen form yang menggunakan useSearchParams
+function ResetPasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
@@ -232,5 +269,14 @@ export default function ResetPasswordPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Komponen utama page dengan Suspense boundary
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<ResetPasswordLoading />}>
+      <ResetPasswordForm />
+    </Suspense>
   );
 }
