@@ -14,10 +14,11 @@ export default function LinkExpiredPage() {
           <div className="mb-6">
             <Image
               src="/images/ss2.png"
-              alt="Expired"
+              alt="Expired Link Illustration"
               width={70}
               height={70}
               className="mx-auto"
+              priority
             />
           </div>
 
@@ -27,7 +28,8 @@ export default function LinkExpiredPage() {
               Link Expired
             </h1>
             <p className="text-[16px] font-semibold text-gray-600 dark:text-gray-400 leading-relaxed">
-              The password reset link has expired.<br />
+              The password reset link has expired.
+              <br />
               Please request a new link to reset your password.
             </p>
           </div>
@@ -37,26 +39,24 @@ export default function LinkExpiredPage() {
             href="/login"
             className="w-full inline-block bg-primary hover:bg-primary/90 text-white font-bold py-2 rounded-full transition duration-200 text-center mb-6"
           >
-            Back to login
+            Back to Login
           </Link>
 
           {/* Back to Sign In Link */}
-          <div>
-            <Link
-              href="/login"
-              className="flex items-center justify-center gap-2 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition duration-200"
-            >
-              <ArrowLeft className="w-5 h-5" />
-              <span className="font-bold">Back to sign in</span>
-            </Link>
-          </div>
+          <Link
+            href="/login"
+            className="flex items-center justify-center gap-2 text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition duration-200"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span className="font-bold">Back to Sign In</span>
+          </Link>
         </div>
       </div>
 
-      {/* Right Side - Illustration - FIXED */}
+      {/* Right Side - Illustration */}
       <div className="hidden lg:flex lg:w-1/2 bg-primary items-center justify-center p-12 fixed right-0 top-0 bottom-0">
         <div className="text-center text-white max-w-md">
-          {/* Logo dengan Shadow Effect */}
+          {/* Logo */}
           <div className="mb-8 flex justify-center">
             <div className="bg-white rounded-2xl p-2 shadow-2xl">
               <Image
@@ -65,6 +65,7 @@ export default function LinkExpiredPage() {
                 width={186}
                 height={186}
                 className="w-32 h-32"
+                priority
               />
             </div>
           </div>

@@ -1,20 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import apiClient from "@/lib/axios";
 import { ArrowLeft } from "lucide-react";
 
 export default function CheckEmailPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") || "useremail@gmail.com";
   const [isResending, setIsResending] = useState(false);
-  const [resendStatus, setResendStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [resendStatus, setResendStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
-  const handleResendEmail = async () => {
+  const handleResendEmail = async (): Promise<void> => {
     try {
       setIsResending(true);
       setResendStatus(null);
@@ -23,21 +22,21 @@ export default function CheckEmailPage() {
         email: email,
       });
 
-      setResendStatus({ 
-        type: 'success', 
-        message: "Reset link has been resent to your email!" 
+      setResendStatus({
+        type: "success",
+        message: "Reset link has been resent to your email!",
       });
-    } catch (err: any) {
-      setResendStatus({ 
-        type: 'error', 
-        message: "Failed to resend. Please try again." 
+    } catch (err: unknown) {
+      setResendStatus({
+        type: "error",
+        message: "Failed to resend. Please try again.",
       });
     } finally {
       setIsResending(false);
     }
   };
 
-  const handleOpenGmail = () => {
+  const handleOpenGmail = (): void => {
     window.open("https://mail.google.com", "_blank");
   };
 
@@ -69,20 +68,23 @@ export default function CheckEmailPage() {
               <span className="font-semibold text-gray-900 dark:text-white">
                 ({email})
               </span>{" "}
-              which valid for 24 hours after receives the email. Please check
-              your email
+              which is valid for 24 hours after receiving the email. Please check
+              your email.
             </p>
           </div>
 
           {/* Resend Message */}
           {resendStatus && (
-            <div className={`
-              px-4 py-2 rounded-lg mb-6 text-center border
-              ${resendStatus.type === 'success' 
-                ? 'bg-primary/10 border-primary/20 text-primary' 
-                : 'bg-destructive/10 border-destructive/20 text-destructive'
-              }
-            `}>
+            <div
+              className={`
+                px-4 py-2 rounded-lg mb-6 text-center border
+                ${
+                  resendStatus.type === "success"
+                    ? "bg-primary/10 border-primary/20 text-primary"
+                    : "bg-destructive/10 border-destructive/20 text-destructive"
+                }
+              `}
+            >
               {resendStatus.message}
             </div>
           )}
@@ -97,13 +99,13 @@ export default function CheckEmailPage() {
 
           {/* Resend Link */}
           <p className="text-center text-[16px] text-gray-600 dark:text-gray-400 mb-6">
-            <span className="font-bold">Don't receive the email ?</span>{" "}
+            <span className="font-bold">Don&apos;t receive the email?</span>{" "}
             <button
               onClick={handleResendEmail}
               disabled={isResending}
               className="text-primary hover:text-primary/80 font-bold disabled:opacity-50"
             >
-              {isResending ? "Sending..." : "Click here to resend !"}
+              {isResending ? "Sending..." : "Click here to resend!"}
             </button>
           </p>
 
@@ -120,10 +122,10 @@ export default function CheckEmailPage() {
         </div>
       </div>
 
-      {/* Right Side - Illustration - FIXED */}
+      {/* Right Side - Illustration */}
       <div className="hidden lg:flex lg:w-1/2 bg-primary items-center justify-center p-12 fixed right-0 top-0 bottom-0">
         <div className="text-center text-white max-w-md">
-          {/* Logo dengan Shadow Effect */}
+          {/* Logo with Shadow Effect */}
           <div className="mb-8 flex justify-center">
             <div className="bg-white rounded-2xl p-2 shadow-2xl">
               <Image

@@ -11,7 +11,7 @@ export default function ResetPasswordSuccessPage() {
       <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 bg-white dark:bg-gray-900">
         <div className="w-full max-w-md text-center">
           {/* Success Icon */}
-          <div className="mb-4">
+          <div className="mb-6">
             <Image
               src="/images/pw1.png"
               alt="Success"
@@ -23,12 +23,12 @@ export default function ResetPasswordSuccessPage() {
 
           {/* Title */}
           <div className="mb-8">
-            <h1 className="text-[35px] font-bold text-gray-900 dark:text-white mb-5">
+            <h1 className="text-[35px] font-bold text-gray-900 dark:text-white mb-4 leading-snug">
               Your password has been<br />successfully reset
             </h1>
-            <p className="text-[14px] font-semibold text-gray-600 dark:text-gray-400 leading-relaxed">
-              Password reset completed. Please use your updated password to log in
-              and ensure that your account information remains secure at all times.
+            <p className="text-[15px] font-semibold text-gray-600 dark:text-gray-400 leading-relaxed">
+              Password reset completed successfully. Please use your new password to log in
+              and keep your account information secure.
             </p>
           </div>
 
@@ -56,7 +56,7 @@ export default function ResetPasswordSuccessPage() {
       {/* Right Side - Illustration - FIXED */}
       <div className="hidden lg:flex lg:w-1/2 bg-primary items-center justify-center p-12 fixed right-0 top-0 bottom-0">
         <div className="text-center text-white max-w-md">
-          {/* Logo dengan Shadow Effect */}
+          {/* Logo with Shadow */}
           <div className="mb-8 flex justify-center">
             <div className="bg-white rounded-2xl p-2 shadow-2xl">
               <Image
@@ -70,8 +70,8 @@ export default function ResetPasswordSuccessPage() {
           </div>
 
           <p className="text-[16px] font-bold leading-relaxed">
-            Enter your registered email address and we'll send you a link to
-            reset your password.
+            Your password has been successfully updated. You can now log in to your account
+            with your new credentials.
           </p>
         </div>
       </div>

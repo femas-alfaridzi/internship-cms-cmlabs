@@ -24,13 +24,13 @@ export default function ForgotPasswordPage() {
     formState: { errors },
   } = useForm<ForgotPasswordFormData>();
 
-  const onSubmit = async (data: ForgotPasswordFormData) => {
+  const onSubmit = async (data: ForgotPasswordFormData): Promise<void> => {
     try {
       setIsLoading(true);
       setError("");
       setSuccess("");
 
-      const response = await apiClient.post("/auth/forgot-password", {
+      await apiClient.post("/auth/forgot-password", {
         email: data.email,
       });
 
@@ -38,12 +38,16 @@ export default function ForgotPasswordPage() {
       setTimeout(() => {
         router.push(`/check-email?email=${data.email}`);
       }, 1500);
-
-    } catch (err: any) {
-      setError(
-        err.response?.data?.message ||
-          "Failed to send reset link. Please try again."
-      );
+    } catch (err: unknown) {
+      if (typeof err === "object" && err !== null && "response" in err) {
+        const axiosError = err as { response?: { data?: { message?: string } } };
+        setError(
+          axiosError.response?.data?.message ||
+            "Failed to send reset link. Please try again."
+        );
+      } else {
+        setError("Failed to send reset link. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -60,7 +64,7 @@ export default function ForgotPasswordPage() {
               Forgot Password
             </h1>
             <p className="text-[16px] font-semibold text-gray-600 dark:text-gray-400 leading-relaxed">
-              Enter your registered email address and we'll send you a link to
+              Enter your registered email address and we&apos;ll send you a link to
               reset your password.
             </p>
           </div>
@@ -88,7 +92,7 @@ export default function ForgotPasswordPage() {
               </label>
               <input
                 type="email"
-                placeholder="Enter your email address . . ."
+                placeholder="Enter your email address..."
                 className={`
                   w-full px-4 py-2 
                   border rounded-lg 
@@ -135,10 +139,10 @@ export default function ForgotPasswordPage() {
         </div>
       </div>
 
-      {/* Right Side - Illustration - FIXED */}
+      {/* Right Side - Illustration */}
       <div className="hidden lg:flex lg:w-1/2 bg-primary items-center justify-center p-12 fixed right-0 top-0 bottom-0">
         <div className="text-center text-white max-w-md">
-          {/* Logo dengan Shadow Effect */}
+          {/* Logo with Shadow Effect */}
           <div className="mb-8 flex justify-center">
             <div className="bg-white rounded-2xl p-2 shadow-2xl">
               <Image
@@ -152,7 +156,7 @@ export default function ForgotPasswordPage() {
           </div>
 
           <p className="text-[16px] font-semibold leading-relaxed">
-            Enter your registered email address and we'll send you a link to
+            Enter your registered email address and we&apos;ll send you a link to
             reset your password.
           </p>
         </div>
