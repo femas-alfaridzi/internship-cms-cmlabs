@@ -1,17 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import apiClient from "@/lib/axios";
 import { ArrowLeft } from "lucide-react";
 
-export default function CheckEmailPage() {
+function CheckEmailContent() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email") || "useremail@gmail.com";
   const [isResending, setIsResending] = useState(false);
-  const [resendStatus, setResendStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
+  const [resendStatus, setResendStatus] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
 
   const handleResendEmail = async (): Promise<void> => {
     try {
@@ -64,26 +67,22 @@ export default function CheckEmailPage() {
               Check your Email
             </h1>
             <p className="text-[16px] font-semibold text-gray-600 dark:text-gray-400 leading-relaxed">
-              We sent a password reset to your email{" "}
+              We sent a password reset link to your email{" "}
               <span className="font-semibold text-gray-900 dark:text-white">
                 ({email})
               </span>{" "}
-              which is valid for 24 hours after receiving the email. Please check
-              your email.
+              which is valid for 24 hours. Please check your inbox.
             </p>
           </div>
 
           {/* Resend Message */}
           {resendStatus && (
             <div
-              className={`
-                px-4 py-2 rounded-lg mb-6 text-center border
-                ${
-                  resendStatus.type === "success"
-                    ? "bg-primary/10 border-primary/20 text-primary"
-                    : "bg-destructive/10 border-destructive/20 text-destructive"
-                }
-              `}
+              className={`px-4 py-2 rounded-lg mb-6 text-center border ${
+                resendStatus.type === "success"
+                  ? "bg-primary/10 border-primary/20 text-primary"
+                  : "bg-destructive/10 border-destructive/20 text-destructive"
+              }`}
             >
               {resendStatus.message}
             </div>
@@ -145,5 +144,13 @@ export default function CheckEmailPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function CheckEmailPage() {
+  return (
+    <Suspense fallback={<p className="text-center mt-10">Loading...</p>}>
+      <CheckEmailContent />
+    </Suspense>
   );
 }
